@@ -9,7 +9,7 @@ public class TelegramException extends IOException {
         REDIS_ERROR(3),
         IO_ERROR(4);
 
-        private int value;
+        private final int value;
 
         Error(int value) {
             this.value = value;
