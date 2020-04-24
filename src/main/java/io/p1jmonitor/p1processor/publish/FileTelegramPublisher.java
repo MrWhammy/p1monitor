@@ -1,7 +1,6 @@
 package io.p1jmonitor.p1processor.publish;
 
 import io.p1jmonitor.p1processor.Telegram;
-import io.p1jmonitor.p1processor.TelegramException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,20 +30,21 @@ public class FileTelegramPublisher implements TelegramPublisher {
     }
 
     @Override
-    public void publish(Telegram telegram) throws TelegramException {
+    public void publish(Telegram telegram) throws IOException {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyMMddHHmmss");
         Path file = fileSystem.getPath(dateTimeFormatter.format(LocalDateTime.now(clock)) + ".txt");
-        try {
-            Files.write(file, telegram.getTelegram().getBytes(StandardCharsets.US_ASCII));
-            LOGGER.info("Wrote telegram to file {}", file);
-        } catch (IOException e) {
-            LOGGER.error("Problem writing to file {}", file, e);
-            throw new TelegramException(TelegramException.Error.IO_ERROR, "Could not write telegram to "+ file);
-        }
+        Files.write(file, telegram.getTelegram().getBytes(StandardCharsets.US_ASCII));
+        LOGGER.info("Wrote telegram to file {}", file);
     }
 
     @Override
     public void close() throws IOException {
-        this.fileSystem.close();
+        try {
+            if (!this.fileSystem.equals(FileSystems.getDefault())) {
+                this.fileSystem.close();
+            }
+        } catch (UnsupportedOperationException e) {
+            // no problem, but no way to check properly
+        }
     }
 }

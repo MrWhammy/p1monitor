@@ -1,11 +1,13 @@
 package io.p1jmonitor.p1processor;
 
+import java.util.zip.Checksum;
+
 public class Telegram {
     private final String telegram;
     private final long checksumValue;
-    private final long calculatedChecksum;
+    private final Checksum calculatedChecksum;
 
-    public Telegram(String telegram, long checksumValue, long calculatedChecksum) {
+    public Telegram(String telegram, long checksumValue, Checksum calculatedChecksum) {
         this.telegram = telegram;
         this.checksumValue = checksumValue;
         this.calculatedChecksum = calculatedChecksum;
@@ -15,7 +17,7 @@ public class Telegram {
         return telegram;
     }
 
-    public long getCalculatedChecksum() {
+    public Checksum getCalculatedChecksum() {
         return calculatedChecksum;
     }
 
@@ -24,7 +26,7 @@ public class Telegram {
     }
 
     public boolean isChecksumValid() {
-        return checksumValue == calculatedChecksum;
+        return checksumValue == calculatedChecksum.getValue();
     }
 
     @Override

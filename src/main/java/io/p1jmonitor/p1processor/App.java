@@ -1,13 +1,14 @@
 package io.p1jmonitor.p1processor;
 
 import io.p1jmonitor.p1processor.publish.*;
-import io.p1jmonitor.p1processor.read.ByteTelegramReader;
 import io.p1jmonitor.p1processor.read.SerialPortByteReader;
+import io.p1jmonitor.p1processor.read.TelegramInputStreamReader;
 import jssc.SerialPortList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -62,20 +63,22 @@ public class App implements Callable<Integer> {
             return TelegramException.Error.CONFIG_ERROR.getValue();
         }
 
-        try (ByteTelegramReader telegramReader = new ByteTelegramReader(SerialPortByteReader.create(portName));
+        try (TelegramInputStreamReader telegramReader = new TelegramInputStreamReader(SerialPortByteReader.create(portName));
              CompositeTelegramPublisher publisher = new CompositeTelegramPublisher(publisherList)) {
             SingleTelegramProcessor processor = new SingleTelegramProcessor(telegramReader, publisher);
 
             if (continuous) {
                 ContinuousRunner runner = new ContinuousRunner(processor);
-                runner.run();
-                return 0;
+                return runner.call() ? 0 : -1;
             } else {
                 return processor.call() ? 0 : -1;
             }
         } catch (TelegramException e) {
             System.err.println(e.getMessage());
             return e.getError().getValue();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            return TelegramException.Error.IO_ERROR.getValue();
         }
     }
 

@@ -3,6 +3,7 @@ package io.p1jmonitor.p1processor;
 import io.p1jmonitor.p1processor.publish.TelegramPublisher;
 import io.p1jmonitor.p1processor.read.TelegramReader;
 
+import java.io.IOException;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 
@@ -17,7 +18,7 @@ public class SingleTelegramProcessor implements Callable<Boolean> {
     }
 
     @Override
-    public Boolean call() {
+    public Boolean call() throws IOException {
         Optional<Telegram> optionalTelegram = reader.readTelegram();
         if (optionalTelegram.isPresent()) {
             publisher.publish(optionalTelegram.get());

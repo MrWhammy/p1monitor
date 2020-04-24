@@ -1,21 +1,19 @@
-package io.p1jmonitor.p1processor;
+package io.p1jmonitor.p1processor.read;
 
-import io.p1jmonitor.p1processor.read.ByteTelegramReader;
-import io.p1jmonitor.p1processor.read.InputStreamByteReader;
-import org.assertj.core.api.InstanceOfAssertFactories;
-import org.assertj.core.api.InstanceOfAssertFactory;
+import io.p1jmonitor.p1processor.Telegram;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ByteTelegramReaderTest {
+class TelegramInputStreamReaderTest {
 
     @Test
-    void readTelegram() {
-        try (ByteTelegramReader byteTelegramReader = new ByteTelegramReader(new InputStreamByteReader(ByteTelegramReaderTest.class.getResourceAsStream("/sample.txt")))) {
+    void readTelegram() throws IOException {
+        try (TelegramInputStreamReader byteTelegramReader = new TelegramInputStreamReader(TelegramInputStreamReaderTest.class.getResourceAsStream("/sample.txt"))) {
             Optional<Telegram> optionalTelegram = byteTelegramReader.readTelegram();
             assertThat(optionalTelegram).isPresent();
             Telegram telegram = optionalTelegram.get();
@@ -26,16 +24,16 @@ class ByteTelegramReaderTest {
     }
 
     @Test
-    void readEmptyTelegram() {
-        try (ByteTelegramReader byteTelegramReader = new ByteTelegramReader(new InputStreamByteReader(new ByteArrayInputStream(new byte[0])))) {
+    void readEmptyTelegram() throws IOException {
+        try (TelegramInputStreamReader byteTelegramReader = new TelegramInputStreamReader(new ByteArrayInputStream(new byte[0]))) {
             Optional<Telegram> optionalTelegram = byteTelegramReader.readTelegram();
             assertThat(optionalTelegram).isEmpty();
         }
     }
 
     @Test
-    void readHalfTelegram() {
-        try (ByteTelegramReader byteTelegramReader = new ByteTelegramReader(new InputStreamByteReader(ByteTelegramReaderTest.class.getResourceAsStream("/eof.txt")))) {
+    void readHalfTelegram() throws IOException {
+        try (TelegramInputStreamReader byteTelegramReader = new TelegramInputStreamReader(TelegramInputStreamReaderTest.class.getResourceAsStream("/eof.txt"))) {
             Optional<Telegram> optionalTelegram = byteTelegramReader.readTelegram();
             assertThat(optionalTelegram).isEmpty();
         }

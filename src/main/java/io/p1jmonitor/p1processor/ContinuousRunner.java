@@ -1,6 +1,9 @@
 package io.p1jmonitor.p1processor;
 
-public class ContinuousRunner implements Runnable {
+import java.io.IOException;
+import java.util.concurrent.Callable;
+
+public class ContinuousRunner implements Callable<Boolean> {
     private final SingleTelegramProcessor singleRunner;
 
     public ContinuousRunner(SingleTelegramProcessor singleRunner) {
@@ -8,10 +11,11 @@ public class ContinuousRunner implements Runnable {
     }
 
     @Override
-    public void run() {
+    public Boolean call() throws IOException {
         boolean running = true;
         while (running) {
             running = singleRunner.call();
         }
+        return true;
     }
 }

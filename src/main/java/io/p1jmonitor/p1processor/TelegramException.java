@@ -1,6 +1,8 @@
 package io.p1jmonitor.p1processor;
 
-public class TelegramException extends RuntimeException {
+import java.io.IOException;
+
+public class TelegramException extends IOException {
     public enum Error {
         CONFIG_ERROR(1),
         SERIAL_ERROR(2),
