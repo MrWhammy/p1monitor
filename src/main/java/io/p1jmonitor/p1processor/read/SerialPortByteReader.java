@@ -37,7 +37,7 @@ public class SerialPortByteReader extends InputStream {
     }
 
     @Override
-    public int read() throws IOException {
+    public int read() throws TelegramException {
         try {
             while (buffer == null || position >= buffer.length) {
                 buffer = serialPort.readBytes();
@@ -52,7 +52,7 @@ public class SerialPortByteReader extends InputStream {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() throws TelegramException {
         try {
             serialPort.closePort();
         } catch (SerialPortException e) {

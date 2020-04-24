@@ -5,19 +5,32 @@ import io.p1jmonitor.p1processor.TelegramException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisException;
 
-import java.io.IOException;
+import java.net.URI;
 
 import static io.p1jmonitor.p1processor.TelegramException.Error.REDIS_ERROR;
 
 public class RedisTelegramPublisher implements TelegramPublisher {
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisTelegramPublisher.class);
 
-    public static RedisTelegramPublisher create(String topicName) {
-        // TODO: config
-        Jedis jedis = new Jedis();
-        return new RedisTelegramPublisher(jedis, topicName);
+    public static RedisTelegramPublisher create(URI redisUri, String topicName) throws TelegramException {
+        try {
+            Jedis jedis;
+            if (redisUri != null) {
+                LOGGER.debug("Connecting to Redis {}", redisUri);
+                jedis = new Jedis(redisUri);
+            } else {
+                LOGGER.debug("Connecting to Redis using default parameters");
+                jedis = new Jedis();
+            }
+            jedis.connect();
+            return new RedisTelegramPublisher(jedis, topicName);
+        } catch (JedisConnectionException e) {
+            LOGGER.error("Problem connecting to Redis {}", redisUri, e);
+            throw new TelegramException(REDIS_ERROR, "Problem connecting to Redis");
+        }
     }
 
     private final Jedis jedis;
@@ -29,7 +42,7 @@ public class RedisTelegramPublisher implements TelegramPublisher {
     }
 
     @Override
-    public void publish(Telegram telegram) throws IOException {
+    public void publish(Telegram telegram) throws TelegramException {
         LOGGER.debug("Publishing telegram to {}", topicName);
         try {
             long receivers = jedis.publish(topicName, telegram.getTelegram());
@@ -41,9 +54,9 @@ public class RedisTelegramPublisher implements TelegramPublisher {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() throws TelegramException {
         try {
-            jedis.shutdown();
+            jedis.close();
         } catch (JedisException e) {
             LOGGER.error("Problem closing Redis client", e);
             throw new TelegramException(REDIS_ERROR, "Problem closing Redis client");

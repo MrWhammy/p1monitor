@@ -29,6 +29,7 @@ public class TelegramInputStreamReader implements TelegramReader {
     public Optional<Telegram> readTelegram() throws IOException {
         StringBuilder builder = new StringBuilder();
 
+        LOGGER.debug("Waiting for start char");
         // skip to /
         int currentByte = inputStream.read();
         if (currentByte == EOF) {
@@ -41,6 +42,7 @@ public class TelegramInputStreamReader implements TelegramReader {
             }
         }
 
+        LOGGER.debug("Reading telegram");
         Checksum checksum = new CRC16();
         // read to !
         while (currentByte != STOP_CHAR) {
