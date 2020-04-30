@@ -39,14 +39,14 @@ public class CRC16 implements Checksum {
     };
 
 
-    private int sum = 0xFFFF;
+    private int sum = 0x0000;
 
     public long getValue() {
         return sum;
     }
 
     public void reset() {
-        sum = 0xFFFF;
+        sum = 0x0000;
     }
 
     public void update(byte[] b, int off, int len) {

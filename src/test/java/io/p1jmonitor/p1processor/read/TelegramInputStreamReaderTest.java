@@ -19,7 +19,8 @@ class TelegramInputStreamReaderTest {
             Telegram telegram = optionalTelegram.get();
             assertThat(telegram.getTelegram()).startsWith("/FLU5\\253769484_A\r\n").endsWith("\r\n!A72D\r\n");
             assertThat(telegram.getChecksumValue()).isEqualTo(0xA72D);
-            // FIXME: fix checksum and test validation
+            assertThat(telegram.getCalculatedChecksum().getValue()).isEqualTo(0xA72D);
+            assertThat(telegram.isChecksumValid()).isTrue();
         }
     }
 

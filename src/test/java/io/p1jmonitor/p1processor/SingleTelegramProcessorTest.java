@@ -30,6 +30,7 @@ class SingleTelegramProcessorTest {
     @Test
     void call() throws IOException {
         Telegram telegram = mock(Telegram.class);
+        when(telegram.isChecksumValid()).thenReturn(true);
         when(telegramReader.readTelegram()).thenReturn(Optional.of(telegram));
         Boolean result = telegramProcessor.call();
         assertThat(result).isTrue();
@@ -39,6 +40,16 @@ class SingleTelegramProcessorTest {
     @Test
     void callEOF() throws IOException {
         when(telegramReader.readTelegram()).thenReturn(Optional.empty());
+        Boolean result = telegramProcessor.call();
+        assertThat(result).isFalse();
+        verify(telegramPublisher, never()).publish(any(Telegram.class));
+    }
+
+    @Test
+    void callInvalidChecksum() throws IOException {
+        Telegram telegram = mock(Telegram.class);
+        when(telegram.isChecksumValid()).thenReturn(false);
+        when(telegramReader.readTelegram()).thenReturn(Optional.of(telegram));
         Boolean result = telegramProcessor.call();
         assertThat(result).isFalse();
         verify(telegramPublisher, never()).publish(any(Telegram.class));
