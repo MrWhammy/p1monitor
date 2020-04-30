@@ -1,0 +1,9 @@
+[Unit]
+Description=Publishes P1 port messages to redis
+After=redis-server.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/p1processor
+ExecStart=/opt/p1processor/p1processor.sh /dev/ttyUSB0 -t=p1monitor -c
+User=p1processor

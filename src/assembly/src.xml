@@ -3,20 +3,29 @@
           xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
     <id>bin</id>
     <formats>
-        <format>zip</format>
+        <format>tar.gz</format>
     </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
             <directory>${project.build.directory}</directory>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory/>
             <includes>
                 <include>*.jar</include>
             </includes>
         </fileSet>
     </fileSets>
+    <files>
+        <file>
+            <source>src/scripts/p1processor.sh</source>
+            <outputDirectory/>
+            <filtered>true</filtered>
+            <fileMode>0755</fileMode>
+        </file>
+    </files>
     <dependencySets>
         <dependencySet>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory/>
             <useProjectArtifact>false</useProjectArtifact>
             <scope>runtime</scope>
         </dependencySet>
