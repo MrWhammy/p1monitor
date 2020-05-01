@@ -25,7 +25,21 @@ public class SerialPortByteReader extends InputStream {
             LOGGER.error("Problem connection to serial port {}", e.getPortName(), e);
             throw new TelegramException(SERIAL_ERROR, e.getMessage());
         }
+        addShutdownHook(serialPort);
         return new SerialPortByteReader(serialPort);
+    }
+
+    private static void addShutdownHook(SerialPort serialPort) {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                if (serialPort.isOpened()) {
+                    LOGGER.info("Closing serial port {} from shutdown hook", serialPort.getPortName());
+                    serialPort.closePort();
+                }
+            } catch (SerialPortException e) {
+                LOGGER.error("Could not close port {} on shutdown hook", e.getPortName(), e);
+            }
+        }));
     }
 
     private final SerialPort serialPort;
@@ -54,7 +68,9 @@ public class SerialPortByteReader extends InputStream {
     @Override
     public void close() throws TelegramException {
         try {
-            serialPort.closePort();
+            if (serialPort.isOpened()) {
+                serialPort.closePort();
+            }
         } catch (SerialPortException e) {
             LOGGER.error("Problem closing {}", e.getPortName(), e);
             throw new TelegramException(SERIAL_ERROR, e.getMessage());
