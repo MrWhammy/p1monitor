@@ -1,9 +1,10 @@
 package io.p1jmonitor.telegram;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public interface MeterDetails {
     String getEquipmentIdentifier();
-    LocalDateTime getTimestamp();
+    ZonedDateTime getTimestamp();
     MeterType getMeterType();
 }

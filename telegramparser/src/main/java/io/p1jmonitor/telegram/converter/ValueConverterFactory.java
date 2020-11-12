@@ -10,11 +10,17 @@ import java.time.LocalDateTime;
 
 public class ValueConverterFactory {
 
+    private final ZonedDateTimeConverter zonedDateTimeConverter;
+
+    public ValueConverterFactory(ZonedDateTimeConverter zonedDateTimeConverter) {
+        this.zonedDateTimeConverter = zonedDateTimeConverter;
+    }
+
     public ValueConverter<?> forObisCodeAndType(ObisReference obisReference, Class<?> type) {
         if (type == String.class) {
             return StringValueConverter.INSTANCE;
         } else if (type == LocalDateTime.class) {
-            return LocalDateTimeConverter.INSTANCE;
+            return zonedDateTimeConverter;
         } else if (type == BigDecimal.class) {
             return BigDecimalConverter.INSTANCE;
         } else if (type == BigInteger.class) {

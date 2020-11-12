@@ -1,11 +1,11 @@
 package io.p1jmonitor.telegram;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 public interface Telegram {
     String getEquipmentIdentifier();
-    LocalDateTime getTimestamp();
+    ZonedDateTime getTimestamp();
     String getTextMessage();
 
     List<MeterDetails> getMeterDetails();

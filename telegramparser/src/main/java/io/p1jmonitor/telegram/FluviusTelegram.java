@@ -2,14 +2,14 @@ package io.p1jmonitor.telegram;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 public class FluviusTelegram implements Telegram {
 
     private String equipmentIdentifier;
-    private LocalDateTime timestamp;
+    private ZonedDateTime timestamp;
     private ValueWithUnit<BigDecimal> electricityDeliveredToClientTariff1;
     private ValueWithUnit<BigDecimal> electricityDeliveredToClientTariff2;
     private ValueWithUnit<BigDecimal> electricityDeliveredByClientTariff1;
@@ -27,7 +27,7 @@ public class FluviusTelegram implements Telegram {
     private BigInteger gasDeviceType;
     private String gasEquipmentIdentifier;
     private ValueWithUnit<BigDecimal> gasDeliveredLastFiveMinute;
-    private LocalDateTime gasDeliveredTimestamp;
+    private ZonedDateTime gasDeliveredTimestamp;
 
     @Override
     @ObisReference("0-0:96.1.1")
@@ -41,11 +41,11 @@ public class FluviusTelegram implements Telegram {
 
     @Override
     @ObisReference("0-0:1.0.0")
-    public LocalDateTime getTimestamp() {
+    public ZonedDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(ZonedDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -209,7 +209,7 @@ public class FluviusTelegram implements Telegram {
             }
 
             @Override
-            public LocalDateTime getTimestamp() {
+            public ZonedDateTime getTimestamp() {
                 return FluviusTelegram.this.getTimestamp();
             }
         };
@@ -253,11 +253,11 @@ public class FluviusTelegram implements Telegram {
     }
 
     @ObisReference(value = "0-1:24.2.3", valueIndex = 0)
-    public LocalDateTime getGasDeliveredTimestamp() {
+    public ZonedDateTime getGasDeliveredTimestamp() {
         return gasDeliveredTimestamp;
     }
 
-    public void setGasDeliveredTimestamp(LocalDateTime gasDeliveredTimestamp) {
+    public void setGasDeliveredTimestamp(ZonedDateTime gasDeliveredTimestamp) {
         this.gasDeliveredTimestamp = gasDeliveredTimestamp;
     }
 
@@ -269,7 +269,7 @@ public class FluviusTelegram implements Telegram {
             }
 
             @Override
-            public LocalDateTime getTimestamp() {
+            public ZonedDateTime getTimestamp() {
                 return FluviusTelegram.this.getGasDeliveredTimestamp();
             }
 
