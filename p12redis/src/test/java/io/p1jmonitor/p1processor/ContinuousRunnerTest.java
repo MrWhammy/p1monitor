@@ -1,4 +1,4 @@
-package io.p1jmonitor;
+package io.p1jmonitor.p1processor;
 
 import org.junit.jupiter.api.Test;
 

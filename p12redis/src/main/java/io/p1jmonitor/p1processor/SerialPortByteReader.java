@@ -1,4 +1,4 @@
-package io.p1jmonitor.read;
+package io.p1jmonitor.p1processor;
 
 import jssc.SerialPort;
 import jssc.SerialPortException;

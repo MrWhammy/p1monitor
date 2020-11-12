@@ -1,4 +1,4 @@
-package io.p1jmonitor.read;
+package io.p1jmonitor.telegram.raw.io;
 
 import io.p1jmonitor.telegram.raw.RawTelegram;
 import org.junit.jupiter.api.Test;

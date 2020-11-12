@@ -10,7 +10,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>telegrampublisher</module>
         <module>telegramparser</module>
         <module>p12redis</module>
     </modules>
