@@ -2,12 +2,12 @@ package io.p1jmonitor.p1processor;
 
 import java.util.zip.Checksum;
 
-public class Telegram {
+public class RawTelegram {
     private final String telegram;
     private final long checksumValue;
     private final Checksum calculatedChecksum;
 
-    public Telegram(String telegram, long checksumValue, Checksum calculatedChecksum) {
+    public RawTelegram(String telegram, long checksumValue, Checksum calculatedChecksum) {
         this.telegram = telegram;
         this.checksumValue = checksumValue;
         this.calculatedChecksum = calculatedChecksum;

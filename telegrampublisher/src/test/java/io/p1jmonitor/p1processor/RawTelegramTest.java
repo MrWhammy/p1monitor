@@ -8,11 +8,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class TelegramTest {
+class RawTelegramTest {
     @Test
     void getters() {
         Checksum checksum = mock(Checksum.class);
-        Telegram telegram = new Telegram("CONTENT", 666L, checksum);
+        RawTelegram telegram = new RawTelegram("CONTENT", 666L, checksum);
         assertThat(telegram.getTelegram()).isEqualTo("CONTENT");
         assertThat(telegram.getChecksumValue()).isEqualTo(666L);
         assertThat(telegram.getCalculatedChecksum()).isEqualTo(checksum);
@@ -22,7 +22,7 @@ class TelegramTest {
     void valid() {
         Checksum checksum = mock(Checksum.class);
         when(checksum.getValue()).thenReturn(666L);
-        Telegram telegram = new Telegram("CONTENT", 666L, checksum);
+        RawTelegram telegram = new RawTelegram("CONTENT", 666L, checksum);
         assertThat(telegram.isChecksumValid()).isTrue();
     }
 
@@ -30,7 +30,7 @@ class TelegramTest {
     void invalid() {
         Checksum checksum = mock(Checksum.class);
         when(checksum.getValue()).thenReturn(667L);
-        Telegram telegram = new Telegram("CONTENT", 666L, checksum);
+        RawTelegram telegram = new RawTelegram("CONTENT", 666L, checksum);
         assertThat(telegram.isChecksumValid()).isFalse();
     }
 }

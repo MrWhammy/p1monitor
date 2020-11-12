@@ -22,7 +22,7 @@ public class SingleTelegramProcessor implements Callable<Boolean> {
 
     @Override
     public Boolean call() throws IOException {
-        Optional<Telegram> optionalTelegram = reader.readTelegram().filter(this::validateChecksum);
+        Optional<RawTelegram> optionalTelegram = reader.readTelegram().filter(this::validateChecksum);
         if (optionalTelegram.isPresent()) {
             publisher.publish(optionalTelegram.get());
             return true;
@@ -31,7 +31,7 @@ public class SingleTelegramProcessor implements Callable<Boolean> {
         }
     }
 
-    private boolean validateChecksum(Telegram telegram) {
+    private boolean validateChecksum(RawTelegram telegram) {
         if (!telegram.isChecksumValid()) {
             LOGGER.error("Telegram {} has invalid checksum", telegram);
             return false;

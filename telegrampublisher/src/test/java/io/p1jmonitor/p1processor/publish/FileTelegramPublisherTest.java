@@ -1,7 +1,7 @@
 package io.p1jmonitor.p1processor.publish;
 
 import com.google.common.jimfs.Jimfs;
-import io.p1jmonitor.p1processor.Telegram;
+import io.p1jmonitor.p1processor.RawTelegram;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +30,7 @@ class FileTelegramPublisherTest {
 
     @Test
     void publish() throws IOException {
-        Telegram telegram = new Telegram("CONTENT", -1, mock(Checksum.class));
+        RawTelegram telegram = new RawTelegram("CONTENT", -1, mock(Checksum.class));
         fileTelegramPublisher.publish(telegram);
         assertThat(jimfs.getPath("180820044542.txt")).hasContent("CONTENT");
     }

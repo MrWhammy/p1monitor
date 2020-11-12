@@ -1,6 +1,6 @@
 package io.p1jmonitor.p1processor.publish;
 
-import io.p1jmonitor.p1processor.Telegram;
+import io.p1jmonitor.p1processor.RawTelegram;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +30,7 @@ public class FileTelegramPublisher implements TelegramPublisher {
     }
 
     @Override
-    public void publish(Telegram telegram) throws IOException {
+    public void publish(RawTelegram telegram) throws IOException {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyMMddHHmmss");
         Path file = fileSystem.getPath(dateTimeFormatter.format(LocalDateTime.now(clock)) + ".txt");
         Files.write(file, telegram.getTelegram().getBytes(StandardCharsets.US_ASCII));

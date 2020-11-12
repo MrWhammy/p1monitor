@@ -1,6 +1,6 @@
 package io.p1jmonitor.p1processor.publish;
 
-import io.p1jmonitor.p1processor.Telegram;
+import io.p1jmonitor.p1processor.RawTelegram;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ public class CompositeTelegramPublisher implements TelegramPublisher {
     }
 
     @Override
-    public void publish(Telegram telegram) throws IOException {
+    public void publish(RawTelegram telegram) throws IOException {
         for (TelegramPublisher publisher : telegramPublisherList) {
             publisher.publish(telegram);
         }

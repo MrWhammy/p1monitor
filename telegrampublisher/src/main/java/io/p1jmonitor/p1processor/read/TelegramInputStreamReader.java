@@ -1,6 +1,6 @@
 package io.p1jmonitor.p1processor.read;
 
-import io.p1jmonitor.p1processor.Telegram;
+import io.p1jmonitor.p1processor.RawTelegram;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ public class TelegramInputStreamReader implements TelegramReader {
     }
 
     @Override
-    public Optional<Telegram> readTelegram() throws IOException {
+    public Optional<RawTelegram> readTelegram() throws IOException {
         StringBuilder builder = new StringBuilder();
 
         LOGGER.debug("Waiting for start char");
@@ -83,7 +83,7 @@ public class TelegramInputStreamReader implements TelegramReader {
         }
         builder.append((char) currentByte);
 
-        return Optional.of(new Telegram(builder.toString(), declaredChecksum, checksum));
+        return Optional.of(new RawTelegram(builder.toString(), declaredChecksum, checksum));
     }
 
     @Override

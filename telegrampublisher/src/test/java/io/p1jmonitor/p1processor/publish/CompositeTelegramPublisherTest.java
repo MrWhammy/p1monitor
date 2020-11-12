@@ -1,6 +1,6 @@
 package io.p1jmonitor.p1processor.publish;
 
-import io.p1jmonitor.p1processor.Telegram;
+import io.p1jmonitor.p1processor.RawTelegram;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -28,7 +28,7 @@ class CompositeTelegramPublisherTest {
 
     @Test
     void publish() throws IOException {
-        Telegram telegram = mock(Telegram.class);
+        RawTelegram telegram = mock(RawTelegram.class);
         compositeTelegramPublisher.publish(telegram);
         verify(publisher1).publish(telegram);
         verify(publisher2).publish(telegram);
@@ -36,7 +36,7 @@ class CompositeTelegramPublisherTest {
 
     @Test
     void publishWithException() throws IOException {
-        Telegram telegram = mock(Telegram.class);
+        RawTelegram telegram = mock(RawTelegram.class);
         doThrow(IOException.class).when(publisher1).publish(telegram);
         assertThrows(IOException.class, () -> compositeTelegramPublisher.publish(telegram));
         verify(publisher2, never()).publish(telegram);

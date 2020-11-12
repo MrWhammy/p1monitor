@@ -1,7 +1,5 @@
 package io.p1jmonitor.p1processor;
 
-import io.p1jmonitor.p1processor.Telegram;
-import io.p1jmonitor.p1processor.TelegramException;
 import io.p1jmonitor.p1processor.publish.TelegramPublisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +41,7 @@ public class RedisTelegramPublisher implements TelegramPublisher {
     }
 
     @Override
-    public void publish(Telegram telegram) throws TelegramException {
+    public void publish(RawTelegram telegram) throws TelegramException {
         LOGGER.debug("Publishing telegram to {}", topicName);
         try {
             long receivers = jedis.publish(topicName, telegram.getTelegram());
