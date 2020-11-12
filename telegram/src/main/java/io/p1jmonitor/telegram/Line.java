@@ -1,5 +1,6 @@
 package io.p1jmonitor.telegram;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -17,6 +18,11 @@ public abstract class Line {
 
     protected String get(String key) {
         return line.group(key);
+    }
+
+    @Override
+    public String toString() {
+        return line.group(0);
     }
 
     public static class Header extends Line {
@@ -66,6 +72,24 @@ public abstract class Line {
 
         public String getCRC() {
             return get("CRC");
+        }
+
+        public long getChecksum() {
+            long checkSum = 0;
+            for (char ch : getCRC().toCharArray()) {
+                checkSum = (checkSum << 4) + hex(ch);
+            }
+            return checkSum;
+        }
+
+        private static int hex(int character) {
+            if (character >= '0' && character <= '9') {
+                return character - '0';
+            } else if (character >= 'A' && character <= 'F') {
+                return (character - 'A') + 10;
+            } else {
+                throw new IllegalArgumentException("Expected hex char, not 0x" + Integer.toHexString(character));
+            }
         }
     }
 }

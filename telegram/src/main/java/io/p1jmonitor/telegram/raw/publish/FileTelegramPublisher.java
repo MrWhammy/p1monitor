@@ -33,7 +33,7 @@ public class FileTelegramPublisher implements TelegramPublisher {
     public void publish(RawTelegram telegram) throws IOException {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyMMddHHmmss");
         Path file = fileSystem.getPath(dateTimeFormatter.format(LocalDateTime.now(clock)) + ".txt");
-        Files.write(file, telegram.getTelegram().getBytes(StandardCharsets.US_ASCII));
+        Files.write(file, telegram.toString().getBytes(StandardCharsets.US_ASCII));
         LOGGER.info("Wrote telegram to file {}", file);
     }
 

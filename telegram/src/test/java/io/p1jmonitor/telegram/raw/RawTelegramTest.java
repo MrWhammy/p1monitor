@@ -1,6 +1,8 @@
 package io.p1jmonitor.telegram.raw;
 
 
+import io.p1jmonitor.telegram.COSEMTelegram;
+import io.p1jmonitor.telegram.Line;
 import org.junit.jupiter.api.Test;
 
 import java.util.zip.Checksum;
@@ -13,9 +15,9 @@ class RawTelegramTest {
     @Test
     void getters() {
         Checksum checksum = mock(Checksum.class);
-        RawTelegram telegram = new RawTelegram("CONTENT", 666L, checksum);
-        assertThat(telegram.getTelegram()).isEqualTo("CONTENT");
-        assertThat(telegram.getChecksumValue()).isEqualTo(666L);
+        COSEMTelegram cosemTelegram = mock(COSEMTelegram.class);
+        RawTelegram telegram = new RawTelegram(cosemTelegram, checksum);
+        assertThat(telegram.getTelegram()).isEqualTo(cosemTelegram);
         assertThat(telegram.getCalculatedChecksum()).isEqualTo(checksum);
     }
 
@@ -23,15 +25,23 @@ class RawTelegramTest {
     void valid() {
         Checksum checksum = mock(Checksum.class);
         when(checksum.getValue()).thenReturn(666L);
-        RawTelegram telegram = new RawTelegram("CONTENT", 666L, checksum);
+        COSEMTelegram cosemTelegram = mock(COSEMTelegram.class);
+        Line.Footer footer = mock(Line.Footer.class);
+        when(footer.getChecksum()).thenReturn(666L);
+        when(cosemTelegram.getFooter()).thenReturn(footer);
+        RawTelegram telegram = new RawTelegram(cosemTelegram, checksum);
         assertThat(telegram.isChecksumValid()).isTrue();
     }
 
     @Test
     void invalid() {
         Checksum checksum = mock(Checksum.class);
-        when(checksum.getValue()).thenReturn(667L);
-        RawTelegram telegram = new RawTelegram("CONTENT", 666L, checksum);
+        when(checksum.getValue()).thenReturn(666L);
+        COSEMTelegram cosemTelegram = mock(COSEMTelegram.class);
+        Line.Footer footer = mock(Line.Footer.class);
+        when(footer.getChecksum()).thenReturn(667L);
+        when(cosemTelegram.getFooter()).thenReturn(footer);
+        RawTelegram telegram = new RawTelegram(cosemTelegram, checksum);
         assertThat(telegram.isChecksumValid()).isFalse();
     }
 }

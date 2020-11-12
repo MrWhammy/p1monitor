@@ -1,5 +1,6 @@
 package io.p1jmonitor.telegram.raw.io;
 
+import io.p1jmonitor.telegram.COSEMTelegram;
 import io.p1jmonitor.telegram.raw.CRC16;
 import io.p1jmonitor.telegram.raw.RawTelegram;
 import org.slf4j.Logger;
@@ -63,11 +64,9 @@ public class TelegramInputStreamReader implements TelegramReader {
             return Optional.empty();
         }
 
-        long declaredChecksum = 0;
         // read until CRLF
         while (currentByte != CR) {
             builder.append((char) currentByte);
-            declaredChecksum = (declaredChecksum << 4) + hex(currentByte);
             currentByte = inputStream.read();
             if (currentByte == EOF) {
                 return Optional.empty();
@@ -84,21 +83,11 @@ public class TelegramInputStreamReader implements TelegramReader {
         }
         builder.append((char) currentByte);
 
-        return Optional.of(new RawTelegram(builder.toString(), declaredChecksum, checksum));
+        return Optional.of(new RawTelegram(COSEMTelegram.from(builder.toString()), checksum));
     }
 
     @Override
     public void close() throws IOException {
         inputStream.close();
-    }
-
-    private static int hex(int character) throws IOException {
-        if (character >= '0' && character <= '9') {
-            return character - '0';
-        } else if (character >= 'A' && character <= 'F') {
-            return (character - 'A') + 10;
-        } else {
-            throw new IOException("Expected hex char, not 0x" + Integer.toHexString(character));
-        }
     }
 }

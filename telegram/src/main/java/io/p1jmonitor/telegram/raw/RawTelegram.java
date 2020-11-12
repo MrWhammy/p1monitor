@@ -1,19 +1,19 @@
 package io.p1jmonitor.telegram.raw;
 
+import io.p1jmonitor.telegram.COSEMTelegram;
+
 import java.util.zip.Checksum;
 
 public class RawTelegram {
-    private final String telegram;
-    private final long checksumValue;
+    private final COSEMTelegram telegram;
     private final Checksum calculatedChecksum;
 
-    public RawTelegram(String telegram, long checksumValue, Checksum calculatedChecksum) {
+    public RawTelegram(COSEMTelegram telegram, Checksum calculatedChecksum) {
         this.telegram = telegram;
-        this.checksumValue = checksumValue;
         this.calculatedChecksum = calculatedChecksum;
     }
 
-    public String getTelegram() {
+    public COSEMTelegram getTelegram() {
         return telegram;
     }
 
@@ -21,16 +21,12 @@ public class RawTelegram {
         return calculatedChecksum;
     }
 
-    public long getChecksumValue() {
-        return checksumValue;
-    }
-
     public boolean isChecksumValid() {
-        return checksumValue == calculatedChecksum.getValue();
+        return telegram.getFooter().getChecksum() == calculatedChecksum.getValue();
     }
 
     @Override
     public String toString() {
-        return telegram;
+        return telegram.toString();
     }
 }

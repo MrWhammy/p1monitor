@@ -17,8 +17,8 @@ class TelegramInputStreamReaderTest {
             Optional<RawTelegram> optionalTelegram = byteTelegramReader.readTelegram();
             assertThat(optionalTelegram).isPresent();
             RawTelegram telegram = optionalTelegram.get();
-            assertThat(telegram.getTelegram()).startsWith("/FLU5\\253769484_A\r\n").endsWith("\r\n!A72D\r\n");
-            assertThat(telegram.getChecksumValue()).isEqualTo(0xA72D);
+            assertThat(telegram.getTelegram().toString()).startsWith("/FLU5\\253769484_A\r\n").endsWith("\r\n!A72D\r\n");
+            assertThat(telegram.getTelegram().getFooter().getChecksum()).isEqualTo(0xA72D);
             assertThat(telegram.getCalculatedChecksum().getValue()).isEqualTo(0xA72D);
             assertThat(telegram.isChecksumValid()).isTrue();
         }
