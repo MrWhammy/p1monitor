@@ -1,4 +1,4 @@
-package io.p1jmonitor.telegram.raw.io;
+package io.p1jmonitor.telegram.io;
 
 import java.util.zip.Checksum;
 

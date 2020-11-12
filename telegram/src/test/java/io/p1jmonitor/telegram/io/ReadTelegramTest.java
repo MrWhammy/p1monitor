@@ -1,9 +1,8 @@
-package io.p1jmonitor.telegram.raw.io;
+package io.p1jmonitor.telegram.io;
 
 
 import io.p1jmonitor.telegram.COSEMTelegram;
 import io.p1jmonitor.telegram.Line;
-import io.p1jmonitor.telegram.raw.io.ReadTelegram;
 import org.junit.jupiter.api.Test;
 
 import java.util.zip.Checksum;

@@ -1,7 +1,6 @@
-package io.p1jmonitor.telegram.raw.publish;
+package io.p1jmonitor.telegram.publish;
 
 import io.p1jmonitor.telegram.COSEMTelegram;
-import io.p1jmonitor.telegram.raw.io.ReadTelegram;
 
 public class StandardOutTelegramPublisher implements TelegramPublisher {
     public static StandardOutTelegramPublisher create() {

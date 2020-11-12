@@ -1,4 +1,4 @@
-package io.p1jmonitor.telegram.raw.publish;
+package io.p1jmonitor.telegram.publish;
 
 import io.p1jmonitor.telegram.COSEMTelegram;
 import org.slf4j.Logger;

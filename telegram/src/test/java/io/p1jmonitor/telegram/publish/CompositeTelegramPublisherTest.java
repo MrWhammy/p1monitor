@@ -1,7 +1,6 @@
-package io.p1jmonitor.telegram.raw.publish;
+package io.p1jmonitor.telegram.publish;
 
 import io.p1jmonitor.telegram.COSEMTelegram;
-import io.p1jmonitor.telegram.raw.io.ReadTelegram;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

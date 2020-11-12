@@ -1,10 +1,10 @@
 package io.p1jmonitor.p1processor;
 
-import io.p1jmonitor.telegram.raw.publish.CompositeTelegramPublisher;
-import io.p1jmonitor.telegram.raw.publish.FileTelegramPublisher;
-import io.p1jmonitor.telegram.raw.publish.StandardOutTelegramPublisher;
-import io.p1jmonitor.telegram.raw.publish.TelegramPublisher;
-import io.p1jmonitor.telegram.raw.io.TelegramInputStreamReader;
+import io.p1jmonitor.telegram.publish.CompositeTelegramPublisher;
+import io.p1jmonitor.telegram.publish.FileTelegramPublisher;
+import io.p1jmonitor.telegram.publish.StandardOutTelegramPublisher;
+import io.p1jmonitor.telegram.publish.TelegramPublisher;
+import io.p1jmonitor.telegram.io.TelegramInputStreamReader;
 import jssc.SerialPortList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

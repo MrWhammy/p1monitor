@@ -1,8 +1,7 @@
-package io.p1jmonitor.telegram.raw.publish;
+package io.p1jmonitor.telegram.publish;
 
 import com.google.common.jimfs.Jimfs;
 import io.p1jmonitor.telegram.COSEMTelegram;
-import io.p1jmonitor.telegram.raw.io.ReadTelegram;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +10,6 @@ import java.nio.file.FileSystem;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.zip.Checksum;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
