@@ -1,4 +1,4 @@
-package io.p1jmonitor.p1processor.read;
+package io.p1jmonitor.read;
 
 import java.util.zip.Checksum;
 

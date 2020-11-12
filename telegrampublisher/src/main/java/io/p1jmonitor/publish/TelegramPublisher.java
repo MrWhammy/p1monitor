@@ -1,6 +1,6 @@
-package io.p1jmonitor.p1processor.publish;
+package io.p1jmonitor.publish;
 
-import io.p1jmonitor.p1processor.RawTelegram;
+import io.p1jmonitor.RawTelegram;
 
 import java.io.Closeable;
 import java.io.IOException;

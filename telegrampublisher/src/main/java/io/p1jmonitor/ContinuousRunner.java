@@ -1,4 +1,4 @@
-package io.p1jmonitor.p1processor;
+package io.p1jmonitor;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;

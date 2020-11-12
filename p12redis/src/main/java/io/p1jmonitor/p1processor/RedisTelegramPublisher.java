@@ -1,6 +1,7 @@
 package io.p1jmonitor.p1processor;
 
-import io.p1jmonitor.p1processor.publish.TelegramPublisher;
+import io.p1jmonitor.RawTelegram;
+import io.p1jmonitor.publish.TelegramPublisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;

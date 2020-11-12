@@ -1,8 +1,10 @@
 package io.p1jmonitor.p1processor;
 
-import io.p1jmonitor.p1processor.publish.*;
-import io.p1jmonitor.p1processor.read.SerialPortByteReader;
-import io.p1jmonitor.p1processor.read.TelegramInputStreamReader;
+import io.p1jmonitor.ContinuousRunner;
+import io.p1jmonitor.SingleTelegramProcessor;
+import io.p1jmonitor.publish.*;
+import io.p1jmonitor.read.SerialPortByteReader;
+import io.p1jmonitor.read.TelegramInputStreamReader;
 import jssc.SerialPortList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

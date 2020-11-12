@@ -1,7 +1,9 @@
 package io.p1jmonitor.p1processor;
 
-import io.p1jmonitor.p1processor.publish.TelegramPublisher;
-import io.p1jmonitor.p1processor.read.TelegramReader;
+import io.p1jmonitor.RawTelegram;
+import io.p1jmonitor.SingleTelegramProcessor;
+import io.p1jmonitor.publish.TelegramPublisher;
+import io.p1jmonitor.read.TelegramReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

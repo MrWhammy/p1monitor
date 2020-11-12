@@ -1,7 +1,7 @@
-package io.p1jmonitor.p1processor;
+package io.p1jmonitor;
 
-import io.p1jmonitor.p1processor.publish.TelegramPublisher;
-import io.p1jmonitor.p1processor.read.TelegramReader;
+import io.p1jmonitor.publish.TelegramPublisher;
+import io.p1jmonitor.read.TelegramReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

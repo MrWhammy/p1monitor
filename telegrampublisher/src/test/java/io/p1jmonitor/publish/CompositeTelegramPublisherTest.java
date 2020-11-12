@@ -1,6 +1,6 @@
-package io.p1jmonitor.p1processor.publish;
+package io.p1jmonitor.publish;
 
-import io.p1jmonitor.p1processor.RawTelegram;
+import io.p1jmonitor.RawTelegram;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

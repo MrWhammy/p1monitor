@@ -1,6 +1,6 @@
-package io.p1jmonitor.p1processor.read;
+package io.p1jmonitor.read;
 
-import io.p1jmonitor.p1processor.RawTelegram;
+import io.p1jmonitor.RawTelegram;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;

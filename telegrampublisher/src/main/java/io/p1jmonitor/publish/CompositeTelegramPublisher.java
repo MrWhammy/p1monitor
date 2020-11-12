@@ -1,6 +1,6 @@
-package io.p1jmonitor.p1processor.publish;
+package io.p1jmonitor.publish;
 
-import io.p1jmonitor.p1processor.RawTelegram;
+import io.p1jmonitor.RawTelegram;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
