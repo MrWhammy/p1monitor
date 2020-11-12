@@ -3,6 +3,7 @@ package io.p1jmonitor.telegram.converter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
@@ -11,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ZonedDateTimeConverterTest {
 
-    private ZoneId zoneId = ZoneId.of("Antarctica/McMurdo");
+    private ZoneId zoneId = ZoneId.of("Europe/Brussels");
 
     private ZonedDateTimeConverter zonedDateTimeConverter;
 
@@ -22,20 +23,21 @@ class ZonedDateTimeConverterTest {
 
     @Test
     void convert() {
-        ZonedDateTime dateTime = zonedDateTimeConverter.convert("180820044542W");
-        assertThat(dateTime).isEqualTo(ZonedDateTime.of(2018, 8, 20, 4,45,42, 0, zoneId));
+        ZonedDateTime summerDate = zonedDateTimeConverter.convert("201025023000S");
+        ZonedDateTime winterDate = zonedDateTimeConverter.convert("201025023000W");
+        assertThat(Duration.between(summerDate, winterDate)).isEqualTo(Duration.ofHours(1));
     }
 
     @Test
     void verifyLength() {
-        assertThatThrownBy(() ->zonedDateTimeConverter.convert("20180820044542W"))
+        assertThatThrownBy(() ->zonedDateTimeConverter.convert("20180820044542S"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Invalid length");
     }
 
     @Test
     void verifyDst() {
-        assertThatThrownBy(() -> zonedDateTimeConverter.convert("180820044542S"))
+        assertThatThrownBy(() -> zonedDateTimeConverter.convert("180820044542W"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Illegal DST specifier");
     }
