@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>io.p1jmonitor</groupId>
-            <artifactId>telegramparser</artifactId>
+            <artifactId>telegram</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

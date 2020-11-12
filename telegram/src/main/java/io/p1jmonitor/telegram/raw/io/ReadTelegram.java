@@ -1,14 +1,14 @@
-package io.p1jmonitor.telegram.raw;
+package io.p1jmonitor.telegram.raw.io;
 
 import io.p1jmonitor.telegram.COSEMTelegram;
 
 import java.util.zip.Checksum;
 
-public class RawTelegram {
+public class ReadTelegram {
     private final COSEMTelegram telegram;
     private final Checksum calculatedChecksum;
 
-    public RawTelegram(COSEMTelegram telegram, Checksum calculatedChecksum) {
+    public ReadTelegram(COSEMTelegram telegram, Checksum calculatedChecksum) {
         this.telegram = telegram;
         this.calculatedChecksum = calculatedChecksum;
     }

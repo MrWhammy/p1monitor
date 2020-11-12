@@ -2,8 +2,7 @@ package io.p1jmonitor.telegram.raw.publish;
 
 import com.google.common.jimfs.Jimfs;
 import io.p1jmonitor.telegram.COSEMTelegram;
-import io.p1jmonitor.telegram.raw.RawTelegram;
-import io.p1jmonitor.telegram.raw.publish.FileTelegramPublisher;
+import io.p1jmonitor.telegram.raw.io.ReadTelegram;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,8 +34,7 @@ class FileTelegramPublisherTest {
     void publish() throws IOException {
         COSEMTelegram cosemTelegram = mock(COSEMTelegram.class);
         when(cosemTelegram.toString()).thenReturn("CONTENT");
-        RawTelegram telegram = new RawTelegram(cosemTelegram, mock(Checksum.class));
-        fileTelegramPublisher.publish(telegram);
+        fileTelegramPublisher.publish(cosemTelegram);
         assertThat(jimfs.getPath("180820044542.txt")).hasContent("CONTENT");
     }
 

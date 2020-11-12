@@ -1,8 +1,7 @@
 package io.p1jmonitor.telegram.raw.publish;
 
-import io.p1jmonitor.telegram.raw.RawTelegram;
-import io.p1jmonitor.telegram.raw.publish.CompositeTelegramPublisher;
-import io.p1jmonitor.telegram.raw.publish.TelegramPublisher;
+import io.p1jmonitor.telegram.COSEMTelegram;
+import io.p1jmonitor.telegram.raw.io.ReadTelegram;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -30,7 +29,7 @@ class CompositeTelegramPublisherTest {
 
     @Test
     void publish() throws IOException {
-        RawTelegram telegram = mock(RawTelegram.class);
+        COSEMTelegram telegram = mock(COSEMTelegram.class);
         compositeTelegramPublisher.publish(telegram);
         verify(publisher1).publish(telegram);
         verify(publisher2).publish(telegram);
@@ -38,7 +37,7 @@ class CompositeTelegramPublisherTest {
 
     @Test
     void publishWithException() throws IOException {
-        RawTelegram telegram = mock(RawTelegram.class);
+        COSEMTelegram telegram = mock(COSEMTelegram.class);
         doThrow(IOException.class).when(publisher1).publish(telegram);
         assertThrows(IOException.class, () -> compositeTelegramPublisher.publish(telegram));
         verify(publisher2, never()).publish(telegram);

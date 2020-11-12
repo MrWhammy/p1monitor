@@ -1,6 +1,7 @@
 package io.p1jmonitor.telegram.raw.publish;
 
-import io.p1jmonitor.telegram.raw.RawTelegram;
+import io.p1jmonitor.telegram.COSEMTelegram;
+import io.p1jmonitor.telegram.raw.io.ReadTelegram;
 
 public class StandardOutTelegramPublisher implements TelegramPublisher {
     public static StandardOutTelegramPublisher create() {
@@ -8,8 +9,8 @@ public class StandardOutTelegramPublisher implements TelegramPublisher {
     }
 
     @Override
-    public void publish(RawTelegram telegram) {
-        System.out.println(telegram.getTelegram());
+    public void publish(COSEMTelegram telegram) {
+        System.out.println(telegram);
     }
 
     @Override

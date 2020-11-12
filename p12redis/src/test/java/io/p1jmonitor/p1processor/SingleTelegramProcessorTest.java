@@ -1,6 +1,7 @@
 package io.p1jmonitor.p1processor;
 
-import io.p1jmonitor.telegram.raw.RawTelegram;
+import io.p1jmonitor.telegram.COSEMTelegram;
+import io.p1jmonitor.telegram.raw.io.ReadTelegram;
 import io.p1jmonitor.telegram.raw.publish.TelegramPublisher;
 import io.p1jmonitor.telegram.raw.io.TelegramReader;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,12 +31,14 @@ class SingleTelegramProcessorTest {
 
     @Test
     void call() throws IOException {
-        RawTelegram telegram = mock(RawTelegram.class);
+        ReadTelegram telegram = mock(ReadTelegram.class);
+        COSEMTelegram cosemTelegram = mock(COSEMTelegram.class);
+        when(telegram.getTelegram()).thenReturn(cosemTelegram);
         when(telegram.isChecksumValid()).thenReturn(true);
         when(telegramReader.readTelegram()).thenReturn(Optional.of(telegram));
         Boolean result = telegramProcessor.call();
         assertThat(result).isTrue();
-        verify(telegramPublisher).publish(telegram);
+        verify(telegramPublisher).publish(cosemTelegram);
     }
 
     @Test
@@ -43,16 +46,16 @@ class SingleTelegramProcessorTest {
         when(telegramReader.readTelegram()).thenReturn(Optional.empty());
         Boolean result = telegramProcessor.call();
         assertThat(result).isFalse();
-        verify(telegramPublisher, never()).publish(any(RawTelegram.class));
+        verify(telegramPublisher, never()).publish(any(COSEMTelegram.class));
     }
 
     @Test
     void callInvalidChecksum() throws IOException {
-        RawTelegram telegram = mock(RawTelegram.class);
+        ReadTelegram telegram = mock(ReadTelegram.class);
         when(telegram.isChecksumValid()).thenReturn(false);
         when(telegramReader.readTelegram()).thenReturn(Optional.of(telegram));
         Boolean result = telegramProcessor.call();
         assertThat(result).isFalse();
-        verify(telegramPublisher, never()).publish(any(RawTelegram.class));
+        verify(telegramPublisher, never()).publish(any(COSEMTelegram.class));
     }
 }

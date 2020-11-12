@@ -1,8 +1,8 @@
 package io.p1jmonitor.p1processor;
 
+import io.p1jmonitor.telegram.raw.io.ReadTelegram;
 import io.p1jmonitor.telegram.raw.publish.TelegramPublisher;
 import io.p1jmonitor.telegram.raw.io.TelegramReader;
-import io.p1jmonitor.telegram.raw.RawTelegram;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,16 +23,16 @@ public class SingleTelegramProcessor implements Callable<Boolean> {
 
     @Override
     public Boolean call() throws IOException {
-        Optional<RawTelegram> optionalTelegram = reader.readTelegram().filter(this::validateChecksum);
+        Optional<ReadTelegram> optionalTelegram = reader.readTelegram().filter(this::validateChecksum);
         if (optionalTelegram.isPresent()) {
-            publisher.publish(optionalTelegram.get());
+            publisher.publish(optionalTelegram.get().getTelegram());
             return true;
         } else {
             return false;
         }
     }
 
-    private boolean validateChecksum(RawTelegram telegram) {
+    private boolean validateChecksum(ReadTelegram telegram) {
         if (!telegram.isChecksumValid()) {
             LOGGER.error("Telegram {} has invalid checksum", telegram);
             return false;
