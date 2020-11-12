@@ -84,6 +84,9 @@ public class App implements Callable<Integer> {
         } catch (TelegramException e) {
             System.err.println(e.getMessage());
             return e.getError().getValue();
+        } catch (SerialPortException e) {
+            System.err.println(e.getMessage());
+            return TelegramException.Error.SERIAL_ERROR.getValue();
         } catch (IOException e) {
             System.err.println(e.getMessage());
             return TelegramException.Error.IO_ERROR.getValue();
@@ -91,6 +94,7 @@ public class App implements Callable<Integer> {
     }
 
     public static void main(String... args) {
-        new CommandLine(new App()).execute(args);
+        int exitCode = new CommandLine(new App()).execute(args);
+        System.exit(exitCode);
     }
 }

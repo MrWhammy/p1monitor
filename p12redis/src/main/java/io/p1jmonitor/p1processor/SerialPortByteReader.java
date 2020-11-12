@@ -1,7 +1,6 @@
 package io.p1jmonitor.p1processor;
 
 import jssc.SerialPort;
-import jssc.SerialPortException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,11 +15,10 @@ public class SerialPortByteReader extends InputStream {
         try {
             LOGGER.debug("Connecting to serial port {}", serialPort.getPortName());
             if (!serialPort.openPort() && serialPort.setParams(115200, 8, 1, 0)) {
-                throw new IOException("Could not open port "+serialPort.getPortName());
+                throw new SerialPortException("Could not open port "+serialPort.getPortName());
             }
-        } catch (SerialPortException e) {
-            LOGGER.error("Problem connection to serial port {}", e.getPortName(), e);
-            throw new IOException(e.getMessage());
+        } catch (jssc.SerialPortException e) {
+            throw new SerialPortException(e);
         }
         addShutdownHook(serialPort);
         return new SerialPortByteReader(serialPort);
@@ -33,7 +31,7 @@ public class SerialPortByteReader extends InputStream {
                     LOGGER.info("Closing serial port {} from shutdown hook", serialPort.getPortName());
                     serialPort.closePort();
                 }
-            } catch (SerialPortException e) {
+            } catch (jssc.SerialPortException e) {
                 LOGGER.error("Could not close port {} on shutdown hook", e.getPortName(), e);
             }
         }));
@@ -56,9 +54,8 @@ public class SerialPortByteReader extends InputStream {
             }
 
             return buffer[position++];
-        } catch (SerialPortException e) {
-            LOGGER.error("Problem reading byte from {}", e.getPortName(), e);
-            throw new IOException(e.getMessage());
+        } catch (jssc.SerialPortException e) {
+            throw new SerialPortException(e);
         }
     }
 
@@ -68,9 +65,8 @@ public class SerialPortByteReader extends InputStream {
             if (serialPort.isOpened()) {
                 serialPort.closePort();
             }
-        } catch (SerialPortException e) {
-            LOGGER.error("Problem closing {}", e.getPortName(), e);
-            throw new IOException(e.getMessage());
+        } catch (jssc.SerialPortException e) {
+            throw new SerialPortException(e);
         }
     }
 }
