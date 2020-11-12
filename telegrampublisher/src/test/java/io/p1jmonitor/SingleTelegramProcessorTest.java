@@ -1,7 +1,6 @@
-package io.p1jmonitor.p1processor;
+package io.p1jmonitor;
 
-import io.p1jmonitor.RawTelegram;
-import io.p1jmonitor.SingleTelegramProcessor;
+import io.p1jmonitor.telegram.raw.RawTelegram;
 import io.p1jmonitor.publish.TelegramPublisher;
 import io.p1jmonitor.read.TelegramReader;
 import org.junit.jupiter.api.BeforeEach;

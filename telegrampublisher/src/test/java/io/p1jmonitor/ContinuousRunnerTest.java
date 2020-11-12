@@ -1,7 +1,5 @@
-package io.p1jmonitor.p1processor;
+package io.p1jmonitor;
 
-import io.p1jmonitor.ContinuousRunner;
-import io.p1jmonitor.SingleTelegramProcessor;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

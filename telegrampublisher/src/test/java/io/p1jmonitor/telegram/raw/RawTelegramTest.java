@@ -1,6 +1,6 @@
-package io.p1jmonitor.p1processor;
+package io.p1jmonitor.telegram.raw;
 
-import io.p1jmonitor.RawTelegram;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.zip.Checksum;

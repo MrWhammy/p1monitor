@@ -1,7 +1,7 @@
 package io.p1jmonitor.publish;
 
 import com.google.common.jimfs.Jimfs;
-import io.p1jmonitor.RawTelegram;
+import io.p1jmonitor.telegram.raw.RawTelegram;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
 package io.p1jmonitor.read;
 
-import io.p1jmonitor.RawTelegram;
+import io.p1jmonitor.telegram.raw.RawTelegram;
 
 import java.io.Closeable;
 import java.io.IOException;

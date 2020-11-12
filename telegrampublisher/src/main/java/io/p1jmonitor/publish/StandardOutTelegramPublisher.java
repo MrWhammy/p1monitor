@@ -1,6 +1,6 @@
 package io.p1jmonitor.publish;
 
-import io.p1jmonitor.RawTelegram;
+import io.p1jmonitor.telegram.raw.RawTelegram;
 
 public class StandardOutTelegramPublisher implements TelegramPublisher {
     public static StandardOutTelegramPublisher create() {
