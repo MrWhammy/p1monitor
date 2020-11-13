@@ -6,8 +6,9 @@ import io.p1jmonitor.telegram.publish.TelegramPublisher;
 import io.p1jmonitor.telegram.io.TelegramReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -15,6 +16,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class SingleTelegramProcessorTest {
 
     @Mock
@@ -25,7 +27,6 @@ class SingleTelegramProcessorTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
         telegramProcessor = new SingleTelegramProcessor(telegramReader, telegramPublisher);
     }
 

@@ -3,8 +3,9 @@ package io.p1jmonitor.telegram.publish;
 import io.p1jmonitor.telegram.COSEMTelegram;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -12,7 +13,9 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class CompositeTelegramPublisherTest {
+
     @Mock
     private TelegramPublisher publisher1;
     @Mock
@@ -22,7 +25,6 @@ class CompositeTelegramPublisherTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
         compositeTelegramPublisher = new CompositeTelegramPublisher(Arrays.asList(publisher1, publisher2));
     }
 

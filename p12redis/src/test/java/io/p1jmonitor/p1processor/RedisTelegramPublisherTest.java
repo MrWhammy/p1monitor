@@ -4,12 +4,14 @@ import io.p1jmonitor.telegram.COSEMTelegram;
 import io.p1jmonitor.telegram.Telegram;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import redis.clients.jedis.Jedis;
 
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class RedisTelegramPublisherTest {
 
     private static final String TOPIC_NAME = "TOPIC";
@@ -21,7 +23,6 @@ class RedisTelegramPublisherTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
         publisher = new RedisTelegramPublisher(jedis, TOPIC_NAME);
     }
 

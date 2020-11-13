@@ -11,11 +11,12 @@ import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(name = "p1processor", mixinStandardHelpOptions = true, version = "p1processor 1.0-SNAPSHOT",
@@ -71,7 +72,7 @@ public class App implements Callable<Integer> {
             }
 
             LOGGER.info("Opening connection to {}", portName);
-            try (TelegramInputStreamReader telegramReader = new TelegramInputStreamReader(SerialPortByteReader.create(portName));
+            try (TelegramInputStreamReader telegramReader = new TelegramInputStreamReader(SerialPortByteReader.create(portName, loadSerialConfiguration()));
                  CompositeTelegramPublisher publisher = new CompositeTelegramPublisher(publisherList)) {
                 SingleTelegramProcessor processor = new SingleTelegramProcessor(telegramReader, publisher);
 
@@ -84,14 +85,30 @@ public class App implements Callable<Integer> {
                 }
             }
         } catch (TelegramException e) {
+            LOGGER.error("Could not interpret telegram", e);
             System.err.println(e.getMessage());
             return e.getError().getValue();
         } catch (SerialPortException e) {
+            LOGGER.error("Problem reading from serial port", e);
             System.err.println(e.getMessage());
             return TelegramException.Error.SERIAL_ERROR.getValue();
         } catch (IOException e) {
+            LOGGER.error("Generic IO Exception", e);
             System.err.println(e.getMessage());
             return TelegramException.Error.IO_ERROR.getValue();
+        }
+    }
+
+    private SerialConfiguration loadSerialConfiguration() throws IOException {
+        Path serialConfigurationPath = Paths.get("serial.properties");
+        if (Files.exists(serialConfigurationPath)) {
+            Properties properties = new Properties();
+            try (InputStream inputStream = Files.newInputStream(serialConfigurationPath)) {
+                properties.load(inputStream);
+            }
+            return SerialConfiguration.load(properties);
+        } else {
+            return new SerialConfiguration();
         }
     }
 

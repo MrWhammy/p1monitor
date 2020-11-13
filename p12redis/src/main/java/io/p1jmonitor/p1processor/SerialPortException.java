@@ -10,4 +10,8 @@ public class SerialPortException extends IOException {
     public SerialPortException(String message) {
         super(message);
     }
+
+    public SerialPortException(String message, Throwable e) {
+        super(message, e);
+    }
 }
