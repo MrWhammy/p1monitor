@@ -28,7 +28,7 @@ public class SerialPortByteReader extends InputStream {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 if (serialPort.isOpened()) {
-                    LOGGER.info("Closing serial port {} from shutdown hook", serialPort.getPortName());
+                    LOGGER.debug("Closing serial port {} from shutdown hook", serialPort.getPortName());
                     serialPort.closePort();
                 }
             } catch (jssc.SerialPortException e) {
@@ -41,7 +41,7 @@ public class SerialPortByteReader extends InputStream {
     private byte[] buffer;
     private int position;
 
-    public SerialPortByteReader(SerialPort serialPort) {
+    SerialPortByteReader(SerialPort serialPort) {
         this.serialPort = serialPort;
     }
 

@@ -36,7 +36,7 @@ public class RedisTelegramPublisher implements TelegramPublisher {
     private final Jedis jedis;
     private final String topicName;
 
-    public RedisTelegramPublisher(Jedis jedis, String topicName) {
+    RedisTelegramPublisher(Jedis jedis, String topicName) {
         this.jedis = jedis;
         this.topicName = topicName;
     }

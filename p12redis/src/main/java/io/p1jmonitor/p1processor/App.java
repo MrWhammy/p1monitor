@@ -70,10 +70,12 @@ public class App implements Callable<Integer> {
                 return TelegramException.Error.CONFIG_ERROR.getValue();
             }
 
+            LOGGER.info("Opening connection to {}", portName);
             try (TelegramInputStreamReader telegramReader = new TelegramInputStreamReader(SerialPortByteReader.create(portName));
                  CompositeTelegramPublisher publisher = new CompositeTelegramPublisher(publisherList)) {
                 SingleTelegramProcessor processor = new SingleTelegramProcessor(telegramReader, publisher);
 
+                LOGGER.debug("Starting {} run", continuous ? "continuous" : "single");
                 if (continuous) {
                     ContinuousRunner runner = new ContinuousRunner(processor);
                     return runner.call() ? 0 : -1;
