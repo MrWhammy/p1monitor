@@ -15,8 +15,11 @@ public class SerialPortByteReader extends InputStream {
         SerialPort serialPort = new SerialPort(portName);
         try {
             LOGGER.debug("Connecting to serial port {} using configuration {}", serialPort.getPortName(), serialConfiguration);
-            if (!serialPort.openPort() && serialPort.setParams(serialConfiguration.getBaudRate(), serialConfiguration.getDataBits(), serialConfiguration.getStopBits(), serialConfiguration.getParity())) {
+            if (!serialPort.openPort()) {
                 throw new SerialPortException("Could not open port "+serialPort.getPortName());
+            }
+            if (!serialPort.setParams(serialConfiguration.getBaudRate(), serialConfiguration.getDataBits(), serialConfiguration.getStopBits(), serialConfiguration.getParity())) {
+                throw new SerialPortException("Could not set port parameters "+serialPort.getPortName());
             }
         } catch (jssc.SerialPortException e) {
             throw new SerialPortException(e);
